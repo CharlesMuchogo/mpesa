@@ -1,36 +1,11 @@
 package main
 
-import (
-	"fmt"
-	"main/authentication"
-	"os"
-
-	"github.com/joho/godotenv"
-)
+import "main/c2b"
 
 func main() {
 	
-	consumerKey := goDotEnvVariable("consumerKey")
-	consumerSecret := goDotEnvVariable("consumerSecret")
-   accessToken :=  authentication.GetCredentials(consumerKey , consumerSecret )
-   fmt.Println("Access Token:", accessToken)
-     
+c2b.StkPush("254758896593", 1, "https://baraka-97cb7-default-rtdb.firebaseio.com/mpesa")     
  
 }
 
-func goDotEnvVariable(key string) string {
-
-	// load .env file
-	err := godotenv.Load(".env")
-
-	CheckError(err)
-
-	return os.Getenv(key)
-}
-
-func CheckError(err error) {
-	if err != nil {
-		panic(err.Error())
-	}
-}
 
