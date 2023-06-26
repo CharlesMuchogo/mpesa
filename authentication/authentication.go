@@ -1,7 +1,6 @@
 package authentication
 
 import (
-	"crypto/md5"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
@@ -55,5 +54,7 @@ func GetCredentials(consumerKey string, consumerSecret string) string {
 
 func GenerateSTKPassword(shortCode, passKey, timestamp string) string {
 	password := shortCode + passKey + timestamp
-	return fmt.Sprintf("%X", md5.Sum([]byte(password)))
+	encodedString := base64.StdEncoding.EncodeToString([]byte(password))
+
+	return encodedString
 }

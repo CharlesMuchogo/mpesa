@@ -18,6 +18,10 @@ func StkPush(phoneNumber string, amount float64, callbackURL string) {
 		utils.GoDotEnvVariable("passKey"),
 		timestamp)
 
+		fmt.Printf("password, %v", password)
+
+		
+
 
 	client := resty.New()
 
@@ -34,10 +38,10 @@ func StkPush(phoneNumber string, amount float64, callbackURL string) {
 		"TransactionType":   "CustomerBuyGoodsOnline",
 		"Amount":            amount,
 		"PartyA":            phoneNumber,
-		"PartyB":            utils.GoDotEnvVariable("shortCode"),
+		"PartyB":            "8186048",
 		"PhoneNumber":       phoneNumber,
 		"CallBackURL":       callbackURL,
-		"AccountReference":  "mpesa",
+		"AccountReference":  "AccountReference",
 		"TransactionDesc":   "Transaction description",
 	}
 
