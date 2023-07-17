@@ -10,7 +10,7 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
-func StkPush(phoneNumber string, amount float64, callbackURL string) {
+func StkPush(phoneNumber string, amount float64, callbackURL string) string {
 	timestamp := time.Now().Format("20060102150405")
 
 	password := authentication.GenerateSTKPassword(
@@ -18,20 +18,17 @@ func StkPush(phoneNumber string, amount float64, callbackURL string) {
 		utils.GoDotEnvVariable("passKey"),
 		timestamp)
 
-		fmt.Printf("password, %v", password)
-
-		
-
+	fmt.Printf("password, %v", password)
 
 	client := resty.New()
 
 	consumerKey := utils.GoDotEnvVariable("consumerKey")
 	consumerSecret := utils.GoDotEnvVariable("consumerSecret")
-    accessToken :=  authentication.GetCredentials(consumerKey , consumerSecret )
+	accessToken := authentication.GetCredentials(consumerKey, consumerSecret)
 
 	bearer := fmt.Sprintf("Bearer %v", accessToken)
 
-	data := map[string]interface{}{ 
+	data := map[string]interface{}{
 		"BusinessShortCode": utils.GoDotEnvVariable("shortCode"),
 		"Password":          password,
 		"Timestamp":         timestamp,
@@ -45,7 +42,6 @@ func StkPush(phoneNumber string, amount float64, callbackURL string) {
 		"TransactionDesc":   "Transaction description",
 	}
 
-
 	resp, err := client.R().
 		SetHeader("Content-Type", "application/json").
 		SetHeader("Authorization", bearer).
@@ -54,7 +50,10 @@ func StkPush(phoneNumber string, amount float64, callbackURL string) {
 
 	if err != nil {
 		log.Fatal(err)
+		return resp.String()
 	}
 
 	fmt.Println(resp.String())
+
+	return resp.String()
 }
