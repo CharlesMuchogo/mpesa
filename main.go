@@ -1,25 +1,21 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"main/api"
 	"main/controllers"
 	"main/database"
 	"main/middlewares"
-	"main/utils"
 )
 
 func main() {
-	fmt.Println("Starting server")
-
+	connectionString := database.GetPostgresConnectionString()
 	// Initialize Database
-	database.Connect(utils.GoDotEnvVariable("databaseUrl"))
-	//database.Migrate()
-
+	database.Connect(connectionString)
+	database.Migrate()
 	// Initialize Router
 	router := initRouter()
-	router.Run(":8080")
+	router.Run(":8000")
 }
 
 func initRouter() *gin.Engine {
