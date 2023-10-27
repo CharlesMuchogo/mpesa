@@ -13,7 +13,6 @@ func main() {
 	// Initialize Database
 	database.Connect(connectionString)
 	database.Migrate()
-
 	// Initialize Router
 	router := initRouter()
 	router.Run(":8000")
