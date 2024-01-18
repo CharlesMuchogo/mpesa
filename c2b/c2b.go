@@ -17,8 +17,7 @@ func StkPush(phoneNumber string, amount float64, callbackURL string) string {
 		utils.GoDotEnvVariable("shortCode"),
 		utils.GoDotEnvVariable("passKey"),
 		timestamp)
-
-	fmt.Printf("password, %v", password)
+	fmt.Printf("callback url, %v", callbackURL)
 
 	client := resty.New()
 
