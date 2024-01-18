@@ -18,6 +18,6 @@ func MpesaExpress(c *gin.Context) {
 		return
 	}
 
-	response := c2b.StkPush(mpesa_express.Phone, mpesa_express.Amount, "https://patakazi.com/pay/callback")
+	response := c2b.StkPush(mpesa_express.Phone, mpesa_express.Amount, "https://charlesmuchogo.com/api/callback")
 	c.JSON(http.StatusOK, gin.H{"message": response})
 }
