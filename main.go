@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"main/api"
 	"main/controllers"
 	"main/middlewares"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -14,7 +15,11 @@ func main() {
 	//database.Migrate()
 	// Initialize Router
 	router := initRouter()
-	router.Run(":8000")
+	err := router.Run(":8000")
+	if err != nil {
+		panic(err)
+		return
+	}
 }
 
 func initRouter() *gin.Engine {

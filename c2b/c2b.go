@@ -2,15 +2,16 @@ package c2b
 
 import (
 	"fmt"
-	"log"
 	"main/authentication"
 	"main/utils"
 	"time"
 
 	"github.com/go-resty/resty/v2"
+	"github.com/ochom/gutils/jsonx"
+	"github.com/ochom/gutils/logs"
 )
 
-func StkPush(phoneNumber string, amount float64, callbackURL string) string {
+func StkPush(phoneNumber string, amount float64, callbackURL string) (map[string]any, error) {
 	timestamp := time.Now().Format("20060102150405")
 
 	password := authentication.GenerateSTKPassword(
@@ -48,11 +49,9 @@ func StkPush(phoneNumber string, amount float64, callbackURL string) string {
 		Post("https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest")
 
 	if err != nil {
-		log.Fatal(err)
-		return resp.String()
+		logs.Error("Calling mpesa callback response %+v", resp)
+		return nil, err
 	}
 
-	fmt.Println(resp.String())
-
-	return resp.String()
+	return jsonx.Decode[map[string]any](resp.Body()), nil
 }
